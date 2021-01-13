@@ -1,6 +1,6 @@
-const express = require('express');
-const mysql = require('mysql');
-const bodyParser = require('body-parser');
+const express = require("express");
+const mysql = require("mysql");
+const bodyParser = require("body-parser");
 //const fs = require('fs');
 //const https = require('https');
 
@@ -21,86 +21,84 @@ const server = https.createServer(options, app).listen(3000, function(){
 });
 */
 
-const server = app.listen(3000, function(){
-    console.log("start! express server on port 3000!!");
+const server = app.listen(3000, function () {
+  console.log("start! express server on port 3000!!");
 });
 
 // mysql 로그인
 var mysqlConnection = mysql.createConnection({
-    host: 'localhost',
-    user: 'manager',
-    password: '1234',
-    database: 'hongs_members',
-    multipleStatements: true // 여러 sql 명령어 가능하게 하는 도구
-})
+  host: "localhost",
+  user: "manager",
+  password: "1234",
+  database: "hongs_members",
+  multipleStatements: true, // 여러 sql 명령어 가능하게 하는 도구
+});
 
 // mysql 연결
-mysqlConnection.connect((err)=>{
-    if(!err)
-        console.log('DB connection succeded');
-    else
-        console.log('DB connection failed \n ERROR: ' + JSON.stringify(err, undefined, 2));
+mysqlConnection.connect((err) => {
+  if (!err) console.log("DB connection succeded");
+  else
+    console.log(
+      "DB connection failed \n ERROR: " + JSON.stringify(err, undefined, 2)
+    );
 });
 
 // static 폴더 사용법
-app.use(express.static('private'))
+app.use(express.static("private"));
 
 // DB에 접근해 한개의 열을 도메인을 통해 GET함
-app.post('/login',(req, res)=>{
-    let emp = req.body;
-    
-    let success = false;
-    let sql_query = 'SELECT * FROM user WHERE userID = ? AND userPassword = ?';
+app.post("/login", (req, res) => {
+  let emp = req.body;
 
-    console.log(emp.userID, emp.userPassword);
+  let success = false;
+  let sql_query = "SELECT * FROM user WHERE userID = ? AND userPassword = ?";
 
-    mysqlConnection.query(
-            sql_query,
-            [emp.userID, emp.userPassword],
-            (err, rows, fields)=>{
-                if(!err){
-                    // 로그인 확인
-                    console.log(rows);
-                    console.log(emp.userID);
-                    if(rows[0] != undefined){
-                        success = true;
-                        rows[0].success = true;
-                        res.send(rows[0].stringify);
-                    }else{
-                        success = false;
-                        res.send({"success": false});
-                    }
-                    console.log(success);
-                }
-                else
-                    console.log(err);
-            }
-    );
-});
+  console.log(emp.user_id, emp.name, emp.password);
 
-app.post('/register',(req,res)=>{
-    let emp = req.body;
-    let success = false;
-    let sql_query = 'INSERT INTO user VALUES (?, ?, ?, ?)';
-    // let find_dup = 'SELECT * FROM user WHERE userID = ?';
-
-    mysqlConnection.query(
-        sql_query,
-        [emp.userID, emp.userPassword, emp.userName, emp.userAge],
-        (err, rows, fields)=>{
-            if(!err){
-                success = true;
-                res.send(success);
-            }else
-                console.log(err);
+  mysqlConnection.query(
+    sql_query,
+    [emp.userID, emp.userPassword],
+    (err, rows, fields) => {
+      if (!err) {
+        // 로그인 확인
+        console.log(rows);
+        console.log(emp.userID);
+        if (rows[0] != undefined) {
+          success = true;
+          rows[0].success = true;
+          res.send(rows[0].stringify);
+        } else {
+          success = false;
+          res.send({ success: false });
         }
-    );
+        console.log(success);
+      } else console.log(err);
+    }
+  );
 });
 
-app.use(express.static('public'))
+app.post("/register", (req, res) => {
+  let emp = req.body;
+  let success = false;
+  let sql_query = "INSERT INTO user VALUES (?, ?, ?, ?)";
+  // let find_dup = 'SELECT * FROM user WHERE userID = ?';
 
-app.get('/', function(req, res){
-    res.sendFile(__dirname + "/public/main.html")
-})
+  mysqlConnection.query(
+    sql_query,
+    [emp.userID, emp.userPassword, emp.userName, emp.userAge],
+    (err, rows, fields) => {
+      if (!err) {
+        success = true;
+        res.send(success);
+      } else console.log(err);
+    }
+  );
+});
+
+app.use(express.static("public"));
+
+app.get("/login", function (req, res) {
+  console.log("Sucess");
+});
 
 // 공부 해야할 것 암호화, 아이디 중복 제거
