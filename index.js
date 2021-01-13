@@ -48,8 +48,11 @@ app.use(express.static('private'))
 // DB에 접근해 한개의 열을 도메인을 통해 GET함
 app.post('/login',(req, res)=>{
     let emp = req.body;
+    
     let success = false;
     let sql_query = 'SELECT * FROM user WHERE userID = ? AND userPassword = ?';
+
+    console.log(emp.userID, emp.userPassword);
 
     mysqlConnection.query(
             sql_query,
@@ -57,13 +60,15 @@ app.post('/login',(req, res)=>{
             (err, rows, fields)=>{
                 if(!err){
                     // 로그인 확인
+                    console.log(rows);
+                    console.log(emp.userID);
                     if(rows[0] != undefined){
                         success = true;
                         rows[0].success = true;
-                        res.send(rows[0]);
+                        res.send(rows[0].stringify);
                     }else{
                         success = false;
-                        res.send(success);
+                        res.send({"success": false});
                     }
                     console.log(success);
                 }
@@ -92,5 +97,10 @@ app.post('/register',(req,res)=>{
     );
 });
 
+app.use(express.static('public'))
+
+app.get('/', function(req, res){
+    res.sendFile(__dirname + "/public/main.html")
+})
 
 // 공부 해야할 것 암호화, 아이디 중복 제거

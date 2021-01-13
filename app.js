@@ -46,8 +46,8 @@ app.get('/', function(req, res){
     res.sendFile(__dirname + "/public/main.html")
 })
 
-app.get('/main', function(req, res){
-    res.sendFile(__dirname + "/public/main.html")
+app.get('/form', function(req, res){
+    res.sendFile(__dirname + "/public/form.html")
 })
 
 // DB에 접근하여 모든 열을 GET함
