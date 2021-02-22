@@ -1,1 +1,3 @@
-/node_modules
+database-app/node_modules
+
+login-app/node_modules
