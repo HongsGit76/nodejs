@@ -24,6 +24,16 @@ function login() {
   })
     .then((res) => res.json())
     //then : 서버에서 응답한 메세지 받기
-    .then(console.log);
-  // promise 객체 반환시 then 으로 접근
+    .then((res) => {
+      if (res.success) {
+        // 지정된 위치로 이동하기
+        location.href = "/";
+      } else {
+        alert("res.msg");
+      }
+    })
+    // promise 객체 반환시 then 으로 접근
+    .catch((err) => {
+      console.error(new Error("로그인 중 에러 발생"));
+    });
 }
