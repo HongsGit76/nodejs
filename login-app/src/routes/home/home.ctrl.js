@@ -19,21 +19,18 @@ const process = {
     const id = req.body.req_id;
     const password = req.body.req_password;
 
-    const userStorage = userStorage();
-    // const response = {};
-    // if (users.id.includes(id)) {
-    //   const idx = users.id.indexOf(id);
-    //   if (users.password[idx] === password) {
-    //     response.success = true;
-    //     return res.json(response);
-    //   }
-
-    //   response.success = false;
-    //   response.msg = "비밀번호 오류";
-    //   return res.json(response);
-    // }
-    // response.success = false;
-    // return res.json(response);
+    const users = UserStorage.getUsers("id", "password");
+    const response = {};
+    if (users.id.includes(id)) {
+      const idx = users.id.indexOf(id);
+      if (users.password[idx] === password) {
+        response.success = true;
+        return res.json(response);
+      }
+    }
+    response.success = false;
+    response.msg = "로그인에 실패하셨습니다.";
+    return res.json(response);
   },
 };
 
