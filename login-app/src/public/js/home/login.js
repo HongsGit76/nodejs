@@ -1,6 +1,6 @@
 "use strict";
 
-console.log("log in success");
+// console.log("log in success");
 
 const id = document.querySelector("#id");
 const password = document.querySelector("#password");
@@ -10,15 +10,20 @@ loginBtn.addEventListener("click", login);
 
 function login() {
   const req = {
-    id: id.nodeValue,
-    password: password.nodeValue,
+    req_id: id.value,
+    req_password: password.value,
   };
 
+  // 서버로 데이터 요청
   fetch("/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(req),
-  });
+  })
+    .then((res) => res.json())
+    //then : 서버에서 응답한 메세지 받기
+    .then(console.log);
+  // promise 객체 반환시 then 으로 접근
 }
