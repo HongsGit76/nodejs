@@ -7,10 +7,10 @@ class User {
   }
 
   login() {
-    const body = this.body;
-    const { id, password } = UserStorage.getUserInfo(body.req_id);
+    const client = this.body;
+    const { id, password } = UserStorage.getUserInfo(client.req_id);
     if (id) {
-      if (id === body.req_id && password === body.req_password) {
+      if (id === client.req_id && password === client.req_password) {
         return { success: true };
       }
 
@@ -21,7 +21,8 @@ class User {
 
   register() {
     const client = this.body;
-    UserStorage.save(client);
+    const response = UserStorage.save(client);
+    return response;
   }
 }
 

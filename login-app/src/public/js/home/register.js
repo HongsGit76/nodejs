@@ -11,11 +11,12 @@ const registerBtn = document.querySelector("#button");
 registerBtn.addEventListener("click", register);
 
 function register() {
+  if (!id.value) return alert("아이디 미입력");
+  if (password.value !== confirmPassword.value) return alert("비밀번호 불일치");
   const req = {
     req_id: id.value,
     req_name: name.value,
     req_password: password.value,
-    req_confirmPassword: confirmPassword.value,
   };
 
   console.log(req);
