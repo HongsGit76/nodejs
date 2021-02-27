@@ -20,6 +20,18 @@ class UserStorage {
     }, {});
     return newUsers;
   }
+
+  static getUserInfo(check_id) {
+    const users = this.#users;
+    const idx = users.id.indexOf(check_id);
+    const userKeys = Object.keys(users); // => [id, password, name]과 같은 배열 생성해줌
+    const userInfo = userKeys.reduce((newUser, info) => {
+      newUser[info] = users[info][idx];
+      return newUser;
+    }, {}); // 뒤에 붙는 {} 초기값인 오브젝트
+
+    return userInfo;
+  }
 }
 
 module.exports = UserStorage;
