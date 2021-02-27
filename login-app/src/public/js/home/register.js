@@ -28,12 +28,12 @@ function register() {
     },
     body: JSON.stringify(req),
   })
-    .then((res) => res.json())
+    .then((res) => res.json()) // 프로미스 객체로 반환
     //then : 서버에서 응답한 메세지 받기
     .then((res) => {
       if (res.success) {
         // 지정된 위치로 이동하기
-        location.href = "/";
+        location.href = "/login";
       } else {
         alert("res.msg");
       }
