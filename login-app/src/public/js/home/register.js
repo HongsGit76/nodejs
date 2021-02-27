@@ -3,19 +3,25 @@
 // console.log("log in success");
 
 const id = document.querySelector("#id");
+const name = document.querySelector("#name");
 const password = document.querySelector("#password");
-const loginBtn = document.querySelector("#button");
+const confirmPassword = document.querySelector("#confirm-password");
+const registerBtn = document.querySelector("#button");
 
-loginBtn.addEventListener("click", login);
+registerBtn.addEventListener("click", register);
 
-function login() {
+function register() {
   const req = {
     req_id: id.value,
+    req_name: name.value,
     req_password: password.value,
+    req_confirmPassword: confirmPassword.value,
   };
 
+  console.log(req);
+
   // 서버로 데이터 요청
-  fetch("/login", {
+  fetch("/register", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
