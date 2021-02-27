@@ -22,8 +22,8 @@ const process = {
   login: (req, res) => {
     const user = new User(req.body);
     const response = user.login();
-    console.log(response);
 
+    // 유저 모델 만들기 전 방법
     // return res.json(response);
 
     // const id = req.body.req_id;
@@ -40,6 +40,12 @@ const process = {
     // }
     // response.success = false;
     // response.msg = "로그인에 실패하셨습니다.";
+    return res.json(response);
+  },
+
+  register: (req, res) => {
+    const user = new User(req.body);
+    const response = user.register();
     return res.json(response);
   },
 };
