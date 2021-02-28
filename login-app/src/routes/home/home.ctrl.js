@@ -19,9 +19,9 @@ const output = {
 };
 
 const process = {
-  login: (req, res) => {
+  login: async (req, res) => {
     const user = new User(req.body);
-    const response = user.login();
+    const response = await user.login();
 
     // 유저 모델 만들기 전 방법
     // return res.json(response);

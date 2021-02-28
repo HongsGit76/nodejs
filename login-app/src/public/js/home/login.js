@@ -29,7 +29,7 @@ function login() {
         // 지정된 위치로 이동하기
         location.href = "/";
       } else {
-        alert("res.msg");
+        alert(res.msg);
       }
     })
     // promise 객체 반환시 then 으로 접근
